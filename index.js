@@ -6,15 +6,11 @@ const app = express();
 const port = 3000;
 const index = require('./routes/index');
 const create = require('./routes/create');
-// const register = require('./routes/register');
-// const login = require('./routes/login');
-// const username = require('./routes/username');
-// const deposit = require('./routes/deposit');
-// const funds = require('./routes/funds');
-// const objects = require('./routes/get-object');
-// const buy = require('./routes/bought-obj');
-// const myobjects = require('./routes/my-objects');
-// const deleteHistory = require('./routes/delete-history');
+const getRef = require('./routes/getRef');
+const getAll = require('./routes/getAll');
+const getSpecific = require('./routes/getSpecific');
+const update = require('./routes/update');
+
 const server = require('http').createServer(app);
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/db.sqlite');
@@ -29,15 +25,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', index);
 app.use('/create', create);
-// app.use('/register', register);
-// app.use('/login', login);
-// app.use('/username', username);
-// app.use('/deposit', deposit);
-// app.use('/funds', funds);
-// app.use('/objects', objects);
-// app.use('/buy', buy);
-// app.use('/myobjects', myobjects);
-// app.use('/delete', deleteHistory);
+app.use('/getRefNumber', getRef);
+app.use('/getAll', getAll);
+app.use('/getSpecific', getSpecific);
+app.use('/update', update);
+
 
 
 

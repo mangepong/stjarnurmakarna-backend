@@ -4,7 +4,7 @@ const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./db/db.sqlite");
 
 router.post("/", function (req, res) {
-    console.log("Inskick");
+    console.log("Update a kvitto");
     var refNummer = req.body.model.refNummer;
     var kundnamn = req.body.model.kundnamn;
     var telefon = req.body.model.telefon;
@@ -18,17 +18,17 @@ router.post("/", function (req, res) {
     var notering = req.body.model.notering;
     var status = req.body.model.status;
     var pris = req.body.model.pris;
+    let sql =
+        "UPDATE kvitton SET kundnamn = ?, telefon = ?, adress = ?, kategori = ?, fabrikat = ?, inDatum = ?, levDatum = ?, arbeten = ?, statusMeddelande = ?, notering = ?, status = ?, pris = ? WHERE refNummer = ?";
 
     let arbetenTemp = [];
     for (let i = 0; i < arbeten.length; i++) {
-        arbetenTemp.push(arbeten[i].name)
+        arbetenTemp.push(arbeten[i].name);
     }
 
     let arbetenString = arbetenTemp.join();
 
-
-    var data = [
-        refNummer,
+    let data = [
         kundnamn,
         telefon,
         adress,
@@ -40,23 +40,25 @@ router.post("/", function (req, res) {
         statusMeddelande,
         notering,
         status,
-        pris
+        pris,
+        refNummer
     ];
-    let sql =
-        "INSERT INTO kvitton (refNummer, kundnamn, telefon, adress, kategori, fabrikat, inDatum, levDatum, arbeten, statusMeddelande, notering, status, pris) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    console.log(data);
+
     db.run(sql, data, function (err) {
         if (err) {
             console.log("ERROR");
             console.log(err);
             res.status(400).json({
                 data: {
-                    msg: "Could not add object",
+                    msg: "Could not update kvitto!",
                 },
             });
         } else {
             res.status(201).json({
                 data: {
-                    msg: "Object added!",
+                    msg: "Updated Kvitto!",
                 },
             });
         }
