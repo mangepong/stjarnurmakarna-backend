@@ -5,7 +5,9 @@ const db = new sqlite3.Database("./db/db.sqlite");
 
 router.get("/", function (req, res) {
     console.log("Get refnr");
-    let sql = "SELECT COUNT(*) FROM kvitton";
+    // let sql = "SELECT COUNT(*) FROM kvitton";
+    let sql = "SELECT MAX(refNummer) FROM kvitton";
+
 
     db.all(sql, (err, amount) => {
         if (err) {
@@ -16,9 +18,8 @@ router.get("/", function (req, res) {
                 }
             });
         } else {
-            var refNr = amount[0]["COUNT(*)"] + 1;
+            var refNr = parseInt(amount[0]["MAX(refNummer)"]) + 1;
             res.json({refNummer: refNr});
-            console.log(refNr);
         }
     });
 });
