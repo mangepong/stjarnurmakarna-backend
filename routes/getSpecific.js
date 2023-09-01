@@ -7,8 +7,8 @@ router.post("/", function (req, res) {
     console.log("Get a kvitto");
     console.log(req.body);
     let refNr = req.body.refNr;
-    let sql = "SELECT * FROM kvitton WHERE refNummer = ?";
-
+    let sql = "SELECT * FROM kvitton WHERE refNummer LIKE ?";
+    
     db.all(sql, [refNr], (err, data) => {
         if (err) {
             console.log(err);

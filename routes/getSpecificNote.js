@@ -3,11 +3,11 @@ var router = express.Router();
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./db/db.sqlite");
 
-router.get("/", function (req, res) {
-    console.log("Get all kvitton");
-    let sql = "SELECT * FROM kvitton ORDER BY refNummer DESC LIMIT 100";
+router.post("/", function (req, res) {
+    let notering = req.body.notering;
+    let sql = "SELECT * FROM kvitton WHERE notering LIKE ?";
 
-    db.all(sql, (err, data) => {
+    db.all(sql, ['%' + notering + '%'], (err, data) => {
         if (err) {
             console.log(err);
             res.status(400).json({
