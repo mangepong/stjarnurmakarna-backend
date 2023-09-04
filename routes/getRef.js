@@ -18,7 +18,8 @@ router.get("/", function (req, res) {
                 }
             });
         } else {
-            var refNr = parseInt(amount[0]["MAX(refNummer)"]) + 1;
+            var refNr = 0;
+            refNr += parseInt(amount[0]["MAX(refNummer)"] ?? 0) + 1;
             res.json({refNummer: refNr});
         }
     });
