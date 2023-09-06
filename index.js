@@ -16,15 +16,7 @@ const getSpecificNote = require("./routes/getSpecificNote");
 
 const update = require("./routes/update");
 
-const server = require("https").createServer(
-    // Provide the private and public key to the server by reading each
-    // file's content with the readFileSync() method.
-    {
-        key: fs.readFileSync("../key.pem"),
-        cert: fs.readFileSync("../cert.pem"),
-    },
-    app
-);
+const server = require("http").createServer(app);
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./db/db.sqlite");
 
